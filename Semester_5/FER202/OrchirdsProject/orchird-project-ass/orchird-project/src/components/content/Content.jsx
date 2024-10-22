@@ -13,7 +13,7 @@ function Content({ isDarkMode }) {
 
   useEffect(() => {
     AOS.init({
-      duration: 1000,
+      duration: 800,
       once: true,
     });
 
@@ -86,7 +86,7 @@ function Content({ isDarkMode }) {
               sm={6}
               className="mb-4"
               data-aos="fade-up"
-              data-aos-delay={index * 100}
+              data-aos-delay={index * 50}
             >
               <Card className="shadow-lg transition-transform duration-300 ease-in-out hover:scale-105 bg-white relative">
                 {orchid.isSpecial ? (
@@ -103,7 +103,8 @@ function Content({ isDarkMode }) {
                   className="h-48 object-cover"
                 />
                 <Card.Body className="flex flex-col justify-between">
-                  <Card.Title className="text-lg font-semibold text-purple-600">
+                  {/* //line-clamp-1:  để cắt bớt nội dung hiển thị thành ...*/}
+                  <Card.Title className="text-lg font-semibold text-purple-600 line-clamp-1">
                     {orchid.name}
                   </Card.Title>
                   <div className="flex justify-between items-center mt-2">
