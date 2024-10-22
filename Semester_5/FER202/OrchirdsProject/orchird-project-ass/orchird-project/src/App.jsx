@@ -11,6 +11,7 @@ import Login from "./components/Login"; // Make sure this import is correct
 import { AuthContextProvider } from "./components/AuthContext";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import DashBoard from "./components/DashBoard";
 
 function App() {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -55,6 +56,7 @@ function App() {
           />
           <Route path="/about" element={<About isDarkMode={isDarkMode} />} />
           <Route path="/login" element={<Login isDarkMode={isDarkMode} />} />
+          <Route path="/dashboard" element={<DashBoard />} />
         </Routes>
         <Footer isDarkMode={isDarkMode} />
       </Router>
