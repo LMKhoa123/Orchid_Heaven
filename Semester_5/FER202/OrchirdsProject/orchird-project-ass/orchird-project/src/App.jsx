@@ -1,17 +1,42 @@
 import { useState, useEffect } from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  useNavigate,
+} from "react-router-dom";
 import NavBar from "./components/navBar/Navbar";
 import Content from "./components/content/Content";
 import Detail from "./components/Detail";
 import Contact from "./components/Contact";
 import Original from "./components/Original";
-import Footer from "./components/Footer"; // Import Footer component
+import Footer from "./components/Footer";
 import About from "./components/About";
-import Login from "./components/Login"; // Make sure this import is correct
-import { AuthContextProvider } from "./components/AuthContext";
-import { ToastContainer } from "react-toastify";
+import Login from "./components/Login";
+import { AuthContextProvider, useAuth } from "./components/AuthContext";
+import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import DashBoard from "./components/DashBoard";
+
+const ProtectedRoute = ({ children }) => {
+  const { user } = useAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user === null) {
+      toast.warning("Bạn cần phải đăng nhập trước!");
+      setTimeout(() => {
+        navigate("/login");
+      }, 2000);
+    }
+  }, [user, navigate]);
+
+  if (user === null) {
+    return null;
+  }
+
+  return children;
+};
 
 function App() {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -32,6 +57,7 @@ function App() {
   };
 
   return (
+    //children cung cấp context cho ccacs component con
     <AuthContextProvider>
       <Router>
         <ToastContainer position="top-right" autoClose={1500} />
@@ -56,7 +82,14 @@ function App() {
           />
           <Route path="/about" element={<About isDarkMode={isDarkMode} />} />
           <Route path="/login" element={<Login isDarkMode={isDarkMode} />} />
-          <Route path="/dashboard" element={<DashBoard />} />
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <DashBoard isDarkMode={isDarkMode} />
+              </ProtectedRoute>
+            }
+          />
         </Routes>
         <Footer isDarkMode={isDarkMode} />
       </Router>

@@ -89,7 +89,6 @@ function DashBoard() {
     },
     onSubmit: (values) => {
       if (editingOrchid) {
-        // Handle PUT request (update)
         api
           .put(`${baseURL}/${editingOrchid.id}`, values)
           .then(() => {
@@ -130,7 +129,7 @@ function DashBoard() {
       category: Yup.string().required("Required."),
       clip: Yup.string().url("Must be a valid URL"),
     }),
-    enableReinitialize: true, // Add this line to allow form to reinitialize when values change
+    enableReinitialize: true,
   });
 
   return (
