@@ -70,23 +70,6 @@ function Footer({ isDarkMode }) {
             <p className="mb-4">
               Subscribe to our newsletter for the latest orchid news and tips.
             </p>
-            <form className="flex">
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className={`flex-grow p-2 rounded-l-md focus:outline-none ${
-                  isDarkMode
-                    ? "bg-gray-800 text-white"
-                    : "bg-white text-gray-900"
-                }`}
-              />
-              <button
-                type="submit"
-                className={`px-4 py-2 rounded-r-md bg-pink-500 text-white font-semibold hover:bg-pink-600 transition-colors duration-300`}
-              >
-                Subscribe
-              </button>
-            </form>
           </div>
         </div>
 
@@ -100,9 +83,5 @@ function Footer({ isDarkMode }) {
     </footer>
   );
 }
-
-Footer.propTypes = {
-  isDarkMode: PropTypes.bool.isRequired,
-};
 
 export default Footer;

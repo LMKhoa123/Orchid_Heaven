@@ -49,7 +49,7 @@ function NavBar({ isDarkMode, toggleDarkMode }) {
         variant={isDarkMode ? "dark" : "light"}
         expand="lg"
         fixed="top"
-        className={`transition-all duration-300 ease-in-out py-3 ${
+        className={`transition-all duration-300 ease-in-out py-4 ${
           scrolled ? "shadow-lg" : ""
         } ${isDarkMode ? "bg-gray-900" : "bg-green-100"}`}
       >

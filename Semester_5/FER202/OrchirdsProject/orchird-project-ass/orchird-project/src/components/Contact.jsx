@@ -1,7 +1,10 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import { useAuth } from "./AuthContext";
+import { toast } from "react-toastify";
 
 function Contact({ isDarkMode }) {
+  const { user } = useAuth();
   const validationSchema = Yup.object({
     name: Yup.string().required("Name is required"),
     email: Yup.string()
@@ -9,16 +12,16 @@ function Contact({ isDarkMode }) {
       .required("Email is required"),
     message: Yup.string().required("Message is required"),
   });
-
+  // console.log(user);
   const initialValues = {
-    name: "",
-    email: "",
+    name: user ? user.displayName || "" : "",
+    email: user ? user.email || "" : "",
     message: "",
   };
 
   const handleSubmit = (values, { resetForm }) => {
     console.log("Form submitted:", values);
-    alert("Thank you for your message! We will get back to you soon.");
+    toast.success("Thank you for your message! We will get back to you soon.");
     resetForm();
   };
 
@@ -35,6 +38,7 @@ function Contact({ isDarkMode }) {
             <Formik
               initialValues={initialValues}
               validationSchema={validationSchema}
+              enableReinitialize={true}
               onSubmit={handleSubmit}
             >
               {({ isSubmitting }) => (
