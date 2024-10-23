@@ -1,31 +1,39 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { FaVideo } from "react-icons/fa"; // Import the video icon
-import orchids from "./listOfOrchids";
-import { useState } from "react";
+
+import { useEffect, useState } from "react";
 import ModalCase from "./ModalCase"; // Import the ModalCase component
+import api from "../config/axios";
 
 function Detail({ isDarkMode }) {
   const { id } = useParams(); // Get the id param from the URL
   const navigate = useNavigate();
+  const [orchids, setOrchids] = useState([]);
   const orchid = orchids.find((o) => o.id === parseInt(id));
   const [isOpen, setIsOpen] = useState(false);
 
+  useEffect(() => {
+    const fetchOrchids = async () => {
+      try {
+        console.log(id);
+        const response = await api.get(`orchidList`);
+
+        setOrchids(response.data);
+      } catch (error) {
+        console.log("Error with Detail:" + error);
+      }
+    };
+    fetchOrchids();
+  }, []);
   if (!orchid) {
     return <div>Orchid not found</div>;
   }
 
   return (
     <div
-      className={`py-10 mt-10 min-h-screen ${
+      className={`pt-24 mt-10 min-h-screen  ${
         isDarkMode ? "bg-gray-900 text-gray-100" : "bg-green-50 text-gray-900"
       }`}
-      style={{
-        position: "fixed",
-        top: 0,
-        left: 0,
-        width: "100%",
-        height: "100%",
-      }}
     >
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -33,8 +41,7 @@ function Detail({ isDarkMode }) {
             <img
               src={orchid.image}
               alt={orchid.name}
-              className="w-full h-auto object-cover rounded-lg shadow-lg"
-              style={{ width: "456px", height: "456px" }}
+              className=" object-cover rounded-lg shadow-lg md:w-4/5  h-auto"
             />
           </div>
           <div>
