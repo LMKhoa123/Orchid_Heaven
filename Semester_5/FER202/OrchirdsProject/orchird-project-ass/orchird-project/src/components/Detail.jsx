@@ -1,24 +1,24 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { FaVideo } from "react-icons/fa"; // Import the video icon
+import { FaVideo } from "react-icons/fa";
 
 import { useEffect, useState } from "react";
-import ModalCase from "./ModalCase"; // Import the ModalCase component
+import ModalCase from "./ModalCase";
 import api from "../config/axios";
 
 function Detail({ isDarkMode }) {
   const { id } = useParams(); // Get the id param from the URL
   const navigate = useNavigate();
-  const [orchids, setOrchids] = useState([]);
-  const orchid = orchids.find((o) => o.id === parseInt(id));
+  const [orchid, setOrchid] = useState([]);
+  // const orchid = orchids.find((o) => o.id === parseInt(id));
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     const fetchOrchids = async () => {
       try {
         console.log(id);
-        const response = await api.get(`orchidList`);
+        const response = await api.get(`orchidList/${id}`);
 
-        setOrchids(response.data);
+        setOrchid(response.data);
       } catch (error) {
         console.log("Error with Detail:" + error);
       }

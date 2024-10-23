@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import {
-  signInWithEmailAndPassword,
+  // signInWithEmailAndPassword,
   signOut,
   onAuthStateChanged,
   signInWithPopup,
@@ -13,21 +13,19 @@ const AuthContext = createContext(null);
 export const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-
-  // Đăng nhập với email và password
-  const login = async (email, password) => {
-    try {
-      const userCredential = await signInWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-      setUser(userCredential.user);
-    } catch (error) {
-      console.error("Error logging in:", error.message);
-      throw error;
-    }
-  };
+  // const login = async (email, password) => {
+  //   try {
+  //     const userCredential = await signInWithEmailAndPassword(
+  //       auth,
+  //       email,
+  //       password
+  //     );
+  //     setUser(userCredential.user);
+  //   } catch (error) {
+  //     console.error("Error logging in:", error.message);
+  //     throw error;
+  //   }
+  // };
 
   // Đăng nhập với Google
   const loginWithGoogle = async () => {
@@ -51,7 +49,7 @@ export const AuthContextProvider = ({ children }) => {
     }
   };
 
-  // Lắng nghe trạng thái thay đổi của người dùng (login/logout)
+  // thay đổi login , logout
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
@@ -61,7 +59,7 @@ export const AuthContextProvider = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, login, loginWithGoogle, logout }}>
+    <AuthContext.Provider value={{ user, loginWithGoogle, logout }}>
       {!loading && children}
     </AuthContext.Provider>
   );

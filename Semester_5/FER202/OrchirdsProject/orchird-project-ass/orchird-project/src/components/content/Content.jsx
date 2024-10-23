@@ -6,7 +6,6 @@ import "aos/dist/aos.css";
 import api from "../../config/axios";
 
 function Content({ isDarkMode }) {
-  // State for search input and category filter
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
   const [orchids, setOrchids] = useState([]);
@@ -36,8 +35,10 @@ function Content({ isDarkMode }) {
     );
   });
 
-  // Get unique categories for the filter dropdown
-  const categories = [...new Set(orchids.map((orchid) => orchid.category))];
+  //tạo mảng chứa đối tượng
+  const categories = Array.from(
+    new Set(orchids.map((orchid) => orchid.category))
+  );
 
   return (
     <Container
@@ -47,7 +48,6 @@ function Content({ isDarkMode }) {
       }`}
     >
       <Container>
-        {/* Search Input */}
         <Row className="mb-4">
           <Col md={6}>
             <Form.Control
@@ -58,7 +58,7 @@ function Content({ isDarkMode }) {
               className="shadow-md"
             />
           </Col>
-          {/* Category Filter */}
+
           <Col md={6}>
             <Form.Control
               as="select"
@@ -76,7 +76,6 @@ function Content({ isDarkMode }) {
           </Col>
         </Row>
 
-        {/* Display Orchids */}
         <Row>
           {filteredOrchids.map((orchid, index) => (
             <Col

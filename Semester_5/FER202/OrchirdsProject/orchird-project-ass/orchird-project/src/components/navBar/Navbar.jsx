@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { Navbar, Nav, Container, Button, NavDropdown } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../AuthContext";
@@ -6,24 +6,8 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function NavBar({ isDarkMode, toggleDarkMode }) {
-  const [scrolled, setScrolled] = useState(false);
   const { user, logout } = useAuth();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const isScrolled = window.scrollY > 50;
-      if (isScrolled !== scrolled) {
-        setScrolled(isScrolled);
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, [scrolled]);
 
   useEffect(() => {
     if (user) {
@@ -49,9 +33,9 @@ function NavBar({ isDarkMode, toggleDarkMode }) {
         variant={isDarkMode ? "dark" : "light"}
         expand="lg"
         fixed="top"
-        className={`transition-all duration-300 ease-in-out py-4 ${
-          scrolled ? "shadow-lg" : ""
-        } ${isDarkMode ? "bg-gray-900" : "bg-green-100"}`}
+        className={`transition-all duration-300 ease-in-out py-4${
+          isDarkMode ? "bg-gray-900" : "bg-green-100"
+        }`}
       >
         <Container>
           <Navbar.Brand
